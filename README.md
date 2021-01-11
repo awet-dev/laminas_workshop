@@ -54,12 +54,12 @@ public function getConfig()
         return include __DIR__ . '/../config/module.config.php';
     }
 ```
-- Let the Project know your app, so add `"Questioner\": "module/Questioner/src/"` next to the Application in `composer.json` file of the project. 
+- Let the Project know your app, so add `"Questioner\\": "module/Questioner/src/"` next to the Application in `composer.json` file of the project. 
 ```phpt
 "autoload": {
         "psr-4": {
-            "Application\": "module/Application/src/",
-            "Questioner\": "module/Questioner/src/"
+            "Application\\": "module/Application/src/",
+            "Questioner\\": "module/Questioner/src/"
         }
     };
 ```
@@ -80,7 +80,7 @@ public function indexAction()
   To check if the app configured correctly `var_dump(message);` in `view/questioner/question/index.phtml` and add question route to your url `http://0.0.0.0:8080/question`. <br>
   if it doesn't show the message, look in the `module.config.php` in module/Questioner/config if it is configured correctly. You can also ask me if you want.
 
-- Then create `Question.php` class in Model with `question, first_choice second_choice` and `third_choice` parameters.
+- Then create `Question.php` class in Model with `question, first_choice second_choice`, `third_choice` and `correct_answer` parameters.
 - Create `QuestionForm.php` class in Form and extend it to `Form` module from Laminas\Form. see more [how to create Form](https://docs.laminas.dev/tutorials/getting-started/forms-and-actions/), but first install it if you don't install it during installation to the project with `composer require laminas/laminas-form` command in the terminal. The form will have different inputs corresponding to Question object parameters.
 - Add new method in the QuestionController that return a QuestionForm instance to its corresponding file in the view, this is to create the question from the user side. 
 
@@ -89,8 +89,8 @@ public function indexAction()
 - if you don't install laminas-db during project installation, install it by running `composer require laminas/laminas-db` in the terminal.
 - #### To can interact with the database in two ways :-
 - 1. To configure our database in the `config/autoload/global.php` as described in this tutorial.
-  2. To use the `Adapter` module directly in your app to configure the database. see [Adapter doc here](https://docs.laminas.dev/laminas-db/adapter/)
-  
+  2. To use the `Adapter` module directly in your app to configure the database. see [Adapter doc here](https://docs.laminas.dev/laminas-db/adapter/), the adapter is configured in module/Question/adapter/adapter.config.php. But change it as per you database detail.
+    
 - If you choose the first one go as pre the tutorial, but for the second one instantiate `TableGateway` with the first parameter `table_name` and the second one is the `adapter` you instantiate in the previous step. Using the $tableGateway instance, we can insert, delete, select and update our data. So using the tableGateway insert the values you get from the form and save it in the database.
 
 ### The final step :-
