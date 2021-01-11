@@ -1,0 +1,75 @@
+<?php
+
+namespace Question;
+
+use Laminas\Form\Element\Select;
+use Laminas\Form\Form;
+
+
+$form = new Form('correction');
+$answer = $this->answer;
+
+foreach ($this->questions as $question) {
+    $form->add([
+        'type' => Select::class,
+        'name' => "question_".$question->getId(),
+        'options' => [
+            'label' => $question->getQuestion(),
+            'value_options' => [
+                '1' => $question->getFirstChoice(),
+                '2' => $question->getSecondChoice(),
+                '3' => $question->getThirdChoice()
+            ],
+        ],
+    ]);
+
+    $form->add([
+        'name' => "correct_answer_".$question->getId(),
+        'type' => 'hidden',
+        'attributes' => [
+            'value' => $question->getCorrectAnswer(),
+        ]
+    ]);
+}
+
+$form->add([
+    'name' => 'submit',
+    'type' => 'submit',
+    'attributes' => [
+        'value' => 'Submit Answer',
+        'class' => 'btn btn-primary'
+    ]
+]);
+
+$form->setAttribute('action', $this->url('correction', ['action' => 'index']));
+$form->prepare();
+echo $this->form()->openTag($form);
+
+$color = "";
+$total_point = 0;
+?>
+
+<?php foreach ($this->questions as $question): ?>
+
+    <?php
+        $question_num = 'question_'.$question->getId();
+        $answer_num = 'correct_answer_'.$question->getId();
+        if (isset($answer) && $answer->$question_num == $answer->$answer_num) {
+            $color = "style='color:green;'";
+            $total_point += 1;
+        } elseif (isset($answer) && $answer->$question_num != $answer->$answer_num) {
+            $color = "style='color:red';";
+        }
+    ?>
+    <div <?= $color ?> >
+        <?= $this->formLabel($form->get("question_".$question->getId())); ?>
+        <?= $this->formSelect($form->get("question_".$question->getId())); ?>
+        <?= $this->formHidden($form->get("correct_answer_".$question->getId())); ?>
+    </div>
+<?php endforeach; ?>
+<p> <?= $total_point > 0? $total_point: "" ?></p>
+<?php
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
+
+

@@ -1,0 +1,33 @@
+<?php
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('user', ['action' => 'register']));
+
+$user_name = $form->get('user_name');
+$user_name->setAttribute('class', 'form-control');
+
+$email = $form->get('email');
+$email->setAttribute('class', 'form-control');
+
+$password = $form->get('password');
+$password->setAttribute('class', 'form-control');
+
+$confirm_password = $form->get('confirm_password');
+$confirm_password->setAttribute('class', 'form-control');
+
+$user_type = $form->get('user_type');
+$submit = $form->get('submit');
+
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+<div class="form-group">
+    <?= $this->formRow($user_name); ?>
+    <?= $this->formRow($email); ?>
+    <?= $this->formRow($password); ?>
+    <?= $this->formRow($confirm_password); ?>
+    <?= $this->formRow($user_type); ?>
+    <?= $this->formRow($submit); ?>
+</div>
+<?php
+echo $this->form()->closeTag(); ?>

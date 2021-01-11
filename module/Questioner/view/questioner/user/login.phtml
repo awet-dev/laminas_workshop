@@ -1,0 +1,28 @@
+<?php
+
+$form = $this->form;
+$form->setAttribute('action', $this->url('user', ['action' => 'login']));
+
+$user_name = $form->get('user_name');
+$user_name->setAttribute('class', 'form-control');
+
+$user_password = $form->get('user_password');
+$user_password->setAttribute('class', 'form-control');
+
+
+$submit = $form->get('submit');
+
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+    <div class="form-group">
+        <?= $this->formRow($user_name); ?>
+        <?= $this->formRow($user_password); ?>
+        <?= $this->formRow($submit); ?>
+    </div>
+        <?php foreach ($this->messages as $message): ?>
+            <p> <?= $message ?> </p>
+        <?php endforeach; ?>
+<?php
+echo $this->form()->closeTag(); ?>
+

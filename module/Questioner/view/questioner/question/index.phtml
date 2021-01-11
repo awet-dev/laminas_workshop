@@ -1,0 +1,37 @@
+<?php
+
+$form = $this->form;
+
+$question = $form->get('question');
+$first_choice = $form->get('first_choice');
+$second_choice = $form->get('second_choice');
+$third_choice = $form->get('third_choice');
+$correct_answer = $form->get('correct_answer');
+
+$form->setAttribute('action', $this->url('question', ['action' => 'add']));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+?>
+
+    <div class="form-group">
+        <?= $this->formLabel($question) ?>
+        <?= $this->formElement($question) ?>
+
+        <?= $this->formLabel($first_choice) ?>
+        <?= $this->formElement($first_choice) ?>
+
+        <?= $this->formLabel($second_choice) ?>
+        <?= $this->formElement($second_choice) ?>
+
+        <?= $this->formLabel($third_choice) ?>
+        <?= $this->formElement($third_choice) ?>
+
+        <?= $this->formLabel($correct_answer) ?>
+        <?= $this->formElement($correct_answer) ?>
+
+        <?= $this->formElement($form->get('submit')) ?>
+    </div>
+
+<?php
+echo $this->form()->closeTag();
